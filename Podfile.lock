@@ -1,0 +1,20 @@
+PODS:
+  - Rebar (1.0.0)
+  - SnapKit (5.0.1)
+
+DEPENDENCIES:
+  - Rebar
+  - SnapKit
+
+SPEC REPOS:
+  trunk:
+    - Rebar
+    - SnapKit
+
+SPEC CHECKSUMS:
+  Rebar: f67d229f21de72e258c3fae3870c1b74cd0f1f5f
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+
+PODFILE CHECKSUM: 6c6da6c6d1205d0b5c7b3fe4edc55dbd9c629da7
+
+COCOAPODS: 1.9.3
