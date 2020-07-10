@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Glasswork'
-  s.version          = '1.0.0'
+  s.version          = '1.1.0'
   s.license          = 'MIT'
   s.summary          = 'Glasswork'
   s.homepage         = 'https://github.com/dbagwell/Glasswork'
