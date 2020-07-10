@@ -20,11 +20,11 @@
 
 import UIKit
 
-class ActivityView: UIView {
+public class ActivityView: UIView {
     
     // MARK: - Properties
     
-    var title: String? {
+    public var title: String? {
         get {
             return self.titleLabel.text
         } set {
@@ -73,7 +73,7 @@ class ActivityView: UIView {
     
     // MARK: - Init
     
-    init(title: String? = nil) {
+    public init(title: String? = nil) {
         super.init(frame: .zero)
         
         self.backgroundColor = UIColor.black.withAlphaComponent(0.3)
@@ -90,14 +90,14 @@ class ActivityView: UIView {
         })
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
     // MARK: - Methods
     
-    func show(on superview: UIView) {
+    public func show(on superview: UIView) {
         superview.addSubview(self, { make in
             make.edges.equalToSuperview()
         })
@@ -110,7 +110,7 @@ class ActivityView: UIView {
         }, completion: nil)
     }
     
-    func hide() {
+    public func hide() {
         UIView.animate(withDuration: 0.25, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
             self.alpha = 0
             self.effectView.transform = CGAffineTransform.identity.scaledBy(x: 0.5, y: 0.5)
