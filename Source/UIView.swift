@@ -47,6 +47,20 @@ extension UIView {
         return view
     }
     
+    /// - Returns: This view wrapped in view that will automatically adjust its constraints
+    /// so as not to be obscured by the keyboard.
+    /// - Note: Make sure to decrease the priority of any constraints with this view appropriately
+    /// to avoid conflicts with the constraints that move it out of the way of the keyboard.
+    public func keyboardObserving() -> UIView {
+        let view = KeyboardObservingView()
+        
+        view.addSubview(self, { make in
+            make.edges.equalToSuperview()
+        })
+        
+        return view
+    }
+    
 }
 
 extension UIView {
