@@ -31,6 +31,21 @@ extension TextField {
         public let error: Style
         public let focusedError: Style
         
+        
+        // MARK: - Init
+        
+        public init(
+            `default`: Style,
+            focused: Style,
+            error: Style,
+            focusedError: Style
+        ) {
+            self.default = `default`
+            self.focused = focused
+            self.error = error
+            self.focusedError = focusedError
+        }
+        
     }
     
     public struct Style {
