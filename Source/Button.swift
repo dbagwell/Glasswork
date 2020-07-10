@@ -30,6 +30,7 @@ public final class Button: UIControl {
         return .touchUpInside
     }
     
+    
     // MARK: - UI
     
     private lazy var titleLabel: UILabel = {
@@ -64,6 +65,7 @@ public final class Button: UIControl {
         return view
     }()
     
+    
     // MARK: - Init
     
     public init(title: String? = nil, style: Style, action: (() -> Void)? = nil) {
@@ -88,6 +90,7 @@ public final class Button: UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - UIControl
     
     override public var isHighlighted: Bool {
@@ -104,6 +107,7 @@ public final class Button: UIControl {
             self.contentView.alpha = self.isHighlighted || !self.isEnabled ? 0.2 : 1
         }
     }
+    
     
     // MARK: - UIView
     
