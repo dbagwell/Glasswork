@@ -24,10 +24,15 @@ import SnapKit
 
 extension UIView {
     
+    // MARK: - Adding Subviews
+    
     public func addSubview(_ view: UIView, _ makeConstraintsBlock: @escaping (ConstraintMaker) -> Void) {
         self.addSubview(view)
         view.snp.makeConstraints(makeConstraintsBlock)
     }
+    
+    
+    // MARK: - Simple Preset Views
     
     public static func emptyHeight(_ height: CGFloat) -> UIView {
         let view = UIView()
@@ -47,6 +52,29 @@ extension UIView {
         return view
     }
     
+    public static func color(_ color: UIColor, withHeight height: CGFloat) -> UIView {
+        let view = UIView()
+        view.backgroundColor = color
+        view.snp.makeConstraints({ make in
+            make.height.equalTo(height)
+        })
+        
+        return view
+    }
+    
+    public static func color(_ color: UIColor, withWidth width: CGFloat) -> UIView {
+        let view = UIView()
+        view.backgroundColor = color
+        view.snp.makeConstraints({ make in
+            make.height.equalTo(width)
+        })
+        
+        return view
+    }
+    
+    
+    // MARK: - Keyboard Observation
+    
     /// - Returns: This view wrapped in view that will automatically adjust its constraints
     /// so as not to be obscured by the keyboard.
     /// - Note: Make sure to decrease the priority of any constraints with this view appropriately
@@ -61,9 +89,8 @@ extension UIView {
         return view
     }
     
-}
-
-extension UIView {
+    
+    // MARK: - Activity View
     
     private var currentActivityView: ActivityView? {
         return self.subviews.compactMap({ $0 as? ActivityView }).first
