@@ -73,6 +73,25 @@ extension UIView {
     }
     
     
+    // MARK: - Shadows
+    
+    public func addShadow(
+        color: UIColor = UIColor.black.withAlphaComponent(0.2),
+        radius: CGFloat = 3,
+        offset: CGSize = .init(width: 0, height: -3),
+        opacity: Float = 1
+    ) {
+        self.layer.shadowColor = color.cgColor
+        self.layer.shadowRadius = radius
+        self.layer.shadowOffset = offset
+        self.layer.shadowOpacity = opacity
+    }
+    
+    public func removeShadow() {
+        self.layer.shadowOpacity = 0
+    }
+    
+    
     // MARK: - Keyboard Observation
     
     /// - Returns: This view wrapped in view that will automatically adjust its constraints
