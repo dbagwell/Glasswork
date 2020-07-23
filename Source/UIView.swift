@@ -24,11 +24,15 @@ import SnapKit
 
 extension UIView {
     
-    // MARK: - Adding Subviews
+    // MARK: - Adding / Removing Subviews
     
     public func addSubview(_ view: UIView, _ makeConstraintsBlock: @escaping (ConstraintMaker) -> Void) {
         self.addSubview(view)
         view.snp.makeConstraints(makeConstraintsBlock)
+    }
+    
+    public func removeAllSubviews() {
+        self.subviews.forEach({ $0.removeFromSuperview() })
     }
     
     
