@@ -31,6 +31,7 @@ extension UITableView {
         style: UITableView.Style = .plain,
         estimatedRowHeight: CGFloat = 44,
         separatorStyle: UITableViewCell.SeparatorStyle = .none,
+        separatorColor: UIColor = .clear,
         separatorInset: UIEdgeInsets = .zero,
         headerView: UIView? = nil,
         footerView: UIView? = nil
@@ -41,6 +42,7 @@ extension UITableView {
         self.rowHeight = UITableView.automaticDimension
         self.estimatedRowHeight = estimatedRowHeight
         self.separatorStyle = separatorStyle
+        self.separatorColor = separatorColor
         self.separatorInset = separatorInset
         
         if separatorStyle == .none {
