@@ -70,7 +70,7 @@ extension UIView {
         let view = UIView()
         view.backgroundColor = color
         view.snp.makeConstraints({ make in
-            make.height.equalTo(width)
+            make.width.equalTo(width)
         })
         
         return view
