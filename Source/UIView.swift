@@ -77,6 +77,31 @@ extension UIView {
     }
     
     
+    // MARK: - Border
+    
+    public func setBorder(
+        width: CGFloat? = nil,
+        color: UIColor? = nil,
+        radius: CGFloat? = nil
+    ) {
+        if let width = width {
+            self.layer.borderWidth = width
+        }
+        
+        if let color = color {
+            self.layer.borderColor = color.cgColor
+        }
+        
+        if let radius = radius {
+            self.layer.cornerRadius = radius
+        }
+    }
+    
+    public func clearBorder() {
+        self.setBorder(width: 0, color: .clear, radius: 0)
+    }
+    
+    
     // MARK: - Shadows
     
     public func addShadow(
