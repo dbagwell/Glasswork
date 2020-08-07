@@ -24,7 +24,7 @@ platform :ios, '11.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'Glasswork', '~> 1.7.0'
+    pod 'Glasswork', '~> 1.8.0'
 end
 ```
 

@@ -38,15 +38,6 @@ extension UIView {
     
     // MARK: - Simple Preset Views
     
-    public static func emptyHeight(_ height: CGFloat) -> UIView {
-        let view = UIView()
-        view.snp.makeConstraints({ make in
-            make.height.equalTo(height)
-        })
-        
-        return view
-    }
-    
     public static func emptyWidth(_ width: CGFloat) -> UIView {
         let view = UIView()
         view.snp.makeConstraints({ make in
@@ -56,9 +47,8 @@ extension UIView {
         return view
     }
     
-    public static func color(_ color: UIColor, withHeight height: CGFloat) -> UIView {
+    public static func emptyHeight(_ height: CGFloat) -> UIView {
         let view = UIView()
-        view.backgroundColor = color
         view.snp.makeConstraints({ make in
             make.height.equalTo(height)
         })
@@ -74,6 +64,40 @@ extension UIView {
         })
         
         return view
+    }
+    
+    public static func color(_ color: UIColor, withHeight height: CGFloat) -> UIView {
+        let view = UIView()
+        view.backgroundColor = color
+        view.snp.makeConstraints({ make in
+            make.height.equalTo(height)
+        })
+        
+        return view
+    }
+    
+    /// - Returns: a pair of empty views with equal widths
+    public static func equalWidthPair() -> (UIView, UIView) {
+        let view1 = UIView()
+        let view2 = UIView()
+        
+        view1.snp.makeConstraints({ make in
+            make.width.equalTo(view2)
+        })
+        
+        return (view1, view2)
+    }
+    
+    /// - Returns: a pair of empty views with equal heights
+    public static func equalHeightPair() -> (UIView, UIView) {
+        let view1 = UIView()
+        let view2 = UIView()
+        
+        view1.snp.makeConstraints({ make in
+            make.height.equalTo(view2)
+        })
+        
+        return (view1, view2)
     }
     
     
