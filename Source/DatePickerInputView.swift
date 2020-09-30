@@ -21,6 +21,11 @@ public final class DatePickerInputView: UIView {
     private lazy var datePicker: UIDatePicker = {
         let view = UIDatePicker()
         view.backgroundColor = .white
+        
+        if #available(iOS 13.4, *) {
+            view.preferredDatePickerStyle = .wheels
+        }
+        
         return view
     }()
     
