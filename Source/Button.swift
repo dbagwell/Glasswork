@@ -20,7 +20,7 @@
 
 import UIKit
 
-public final class Button: UIControl {
+public final class Button: Control {
     
     // MARK: - Properties
     
@@ -91,27 +91,9 @@ public final class Button: UIControl {
     }
     
     
-    // MARK: - UIControl
-    
-    override public var isHighlighted: Bool {
-        didSet {
-            guard self.isEnabled else { return }
-            UIView.animate(withDuration: self.isHighlighted ? 0 : 0.25, animations: {
-                self.contentView.alpha = self.isHighlighted ? 0.2 : 1
-            })
-        }
-    }
-    
-    override public var isEnabled: Bool {
-        didSet {
-            self.contentView.alpha = self.isHighlighted || !self.isEnabled ? 0.2 : 1
-        }
-    }
-    
-    
     // MARK: - UIView
     
-    override public var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         return .init(width: self.style.width ?? super.intrinsicContentSize.width, height: self.style.height)
     }
     
