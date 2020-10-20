@@ -145,9 +145,23 @@ extension UIView {
     }
     
     
+    // MARK: - Padding
+    
+    /// - Returns: This view wrapped in a view and inset by `insets`.
+    public func inset(by insets: UIEdgeInsets) -> UIView {
+        let view = UIView()
+        
+        view.addSubview(self, { make in
+            make.edges.equalToSuperview().inset(insets)
+        })
+        
+        return view
+    }
+    
+    
     // MARK: - Keyboard Observation
     
-    /// - Returns: This view wrapped in view that will automatically adjust its constraints
+    /// - Returns: This view wrapped in a view that will automatically adjust its constraints
     /// so as not to be obscured by the keyboard.
     /// - Note: Make sure to decrease the priority of any constraints with this view appropriately
     /// to avoid conflicts with the constraints that move it out of the way of the keyboard.
