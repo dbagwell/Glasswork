@@ -33,4 +33,34 @@ extension UIColor {
         return UIColor(red: 1-r, green: 1-g, blue: 1-b, alpha: a)
     }
     
+    public var hexString: String {
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        self.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        let rgb: Int = (Int)(red * 255) << 16 | (Int)(green * 255) << 8 | (Int)(blue * 255) << 0
+        
+        return NSString(format: "%06x", rgb) as String
+    }
+    
+    public convenience init?(hex: String) {
+        let trimCharacterSet = CharacterSet.whitespacesAndNewlines.union(CharacterSet(charactersIn: "#"))
+        let colorString = hex.trimmingCharacters(in: trimCharacterSet).uppercased()
+        
+        guard colorString.count == 6 else { return nil }
+        
+        var rgbValue: UInt64 = 0
+        Scanner(string: colorString).scanHexInt64(&rgbValue)
+        
+        self.init(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
 }
