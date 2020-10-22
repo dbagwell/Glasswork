@@ -26,7 +26,7 @@ extension UIFont {
         
         // MARK: - Presets
         
-        public static let system = Family(regularName: "system")
+        public static let system = Family(regularName: "-apple-system")
         
         
         // MARK: - Properties
