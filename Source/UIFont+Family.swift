@@ -33,6 +33,7 @@ extension UIFont {
         
         private let ultraLightName: String?
         private let thinName: String?
+        private let lightName: String?
         private let regularName: String
         private let mediumName: String?
         private let semiboldName: String?
@@ -46,6 +47,7 @@ extension UIFont {
         public init(
             ultraLightName: String? = nil,
             thinName: String? = nil,
+            lightName: String? = nil,
             regularName: String,
             mediumName: String? = nil,
             semiboldName: String? = nil,
@@ -55,6 +57,7 @@ extension UIFont {
         ) {
             self.ultraLightName = ultraLightName
             self.thinName = thinName
+            self.lightName = lightName
             self.regularName = regularName
             self.mediumName = mediumName
             self.semiboldName = semiboldName
@@ -71,7 +74,9 @@ extension UIFont {
             case .ultraLight:
                 return self.ultraLightName ?? self.name(for: .thin)
             case .thin:
-                return self.thinName ?? self.name(for: .regular)
+                return self.thinName ?? self.name(for: .light)
+            case .light:
+                return self.lightName ?? self.name(for: .regular)
             case .regular:
                 return self.regularName
             case .medium:
