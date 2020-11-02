@@ -36,6 +36,26 @@ extension UIView {
     }
     
     
+    // MARK: - Hiding
+    
+    /// The inverse of `isHidden`.
+    /// Also a workaround for a bug as described below:
+    /// When a view is in a stack view  the `isHidden` property keeps a cumulative tally of when it's set.
+    /// ie: if it is set to `false` when it's already `false` it needs to be set to `true` twice to actually be set to true.
+    /// There is an open radar bug about this issue here http://www.openradar.me/25087688 .
+    /// This property makes sure to only set `isHidden` if the if it's a different value so as to avoid this issue.
+    public var isRendered: Bool {
+        get {
+            return !self.isHidden
+        }
+        set {
+            if self.isHidden == newValue {
+                self.isHidden = !newValue
+            }
+        }
+    }
+    
+    
     // MARK: - Simple Preset Views
     
     public static func emptyWidth(_ width: CGFloat) -> UIView {
