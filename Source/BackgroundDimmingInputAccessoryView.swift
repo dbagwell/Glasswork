@@ -64,11 +64,11 @@ public final class BackgroundDimmingInputAccessoryView: UIView {
             make.edges.equalToSuperview()
         })
         
+        self.dimmingView.alpha = 0
+            
         // There's some kind of rendering glicth the first time an input view is shown
         // that causes the animation to not work unless dispatched
         DispatchQueue.main.async(execute: {
-            self.dimmingView.alpha = 0
-            
             UIView.animate(withDuration: 0.25, animations: {
                 self.dimmingView.alpha = 1
             })
