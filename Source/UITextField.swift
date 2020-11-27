@@ -20,6 +20,16 @@
 
 import UIKit
 
+extension UITextField {
+    
+    public func useReturnKeyToolbarAsInputAccessoryView(tintColor: UIColor? = nil) {
+        self.inputAccessoryView = UIToolbar(returnKeyType: self.returnKeyType, tintColor: tintColor, action: { [weak self] in
+            self?.sendActions(for: .editingDidEndOnExit)
+        })
+    }
+    
+}
+
 extension UIReturnKeyType {
     
     public var title: String {
