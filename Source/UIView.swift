@@ -96,30 +96,6 @@ extension UIView {
         return view
     }
     
-    /// - Returns: a pair of empty views with equal widths
-    public static func equalWidthPair() -> (UIView, UIView) {
-        let view1 = UIView()
-        let view2 = UIView()
-        
-        view1.snp.makeConstraints({ make in
-            make.width.equalTo(view2)
-        })
-        
-        return (view1, view2)
-    }
-    
-    /// - Returns: a pair of empty views with equal heights
-    public static func equalHeightPair() -> (UIView, UIView) {
-        let view1 = UIView()
-        let view2 = UIView()
-        
-        view1.snp.makeConstraints({ make in
-            make.height.equalTo(view2)
-        })
-        
-        return (view1, view2)
-    }
-    
     
     // MARK: - Border
     
