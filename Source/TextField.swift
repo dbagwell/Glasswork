@@ -26,11 +26,15 @@ public final class TextField: UITextField {
     
     // MARK: - Properties
     
-    public let styles: Styles
+    public var styles: Styles {
+        didSet {
+            self.updateStyle()
+        }
+    }
     
     public var hasError = false {
         didSet {
-            self.apply(self.isFirstResponder ? self.styles.focusedError : self.styles.error)
+            self.updateStyle()
         }
     }
     
@@ -65,13 +69,15 @@ public final class TextField: UITextField {
     // MARK: - UIResponder
     
     override public func becomeFirstResponder() -> Bool {
-        self.apply(self.hasError ? self.styles.focusedError : self.styles.focused)
-        return super.becomeFirstResponder()
+        let result = super.becomeFirstResponder()
+        self.updateStyle()
+        return result
     }
     
     override public func resignFirstResponder() -> Bool {
-        self.apply(self.hasError ? self.styles.error : self.styles.default)
-        return super.resignFirstResponder()
+        let result = super.resignFirstResponder()
+        self.updateStyle()
+        return result
     }
     
     
@@ -95,6 +101,14 @@ public final class TextField: UITextField {
     
     
     // MARK: - Methods
+    
+    private func updateStyle() {
+        if self.hasError {
+            self.apply(self.isFirstResponder ? self.styles.focusedError : self.styles.error)
+        } else {
+            self.apply(self.isFirstResponder ? self.styles.focused : self.styles.default)
+        }
+    }
     
     private func apply(_ style: Style) {
         DispatchQueue.asyncToMainIfNeeded(execute: {
