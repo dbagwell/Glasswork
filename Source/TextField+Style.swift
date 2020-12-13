@@ -61,6 +61,7 @@ extension TextField {
         public let cornerRadius: CGFloat
         public let borderColor: UIColor
         public let backgroundColor: UIColor
+        public let tintColor: UIColor
         public let keyboardType: UIKeyboardType
         public let textContentType: UITextContentType?
         public let autocapitalizationType: UITextAutocapitalizationType
@@ -82,6 +83,7 @@ extension TextField {
             cornerRadius: CGFloat = 0,
             borderColor: UIColor = .clear,
             backgroundColor: UIColor = .clear,
+            tintColor: UIColor = .systemBlue,
             keyboardType: UIKeyboardType = .default,
             textContentType: UITextContentType? = nil,
             autocapitalizationType: UITextAutocapitalizationType = .sentences,
@@ -99,6 +101,7 @@ extension TextField {
             self.cornerRadius = cornerRadius
             self.borderColor = borderColor
             self.backgroundColor = backgroundColor
+            self.tintColor = tintColor
             self.keyboardType = keyboardType
             self.textContentType = textContentType
             self.autocapitalizationType = autocapitalizationType
@@ -121,6 +124,7 @@ extension TextField {
             cornerRadius: CGFloat? = nil,
             borderColor: UIColor? = nil,
             backgroundColor: UIColor? = nil,
+            tintColor: UIColor? = nil,
             keyboardType: UIKeyboardType? = nil,
             textContentType: UITextContentType? = nil,
             autocapitalizationType: UITextAutocapitalizationType? = nil,
@@ -139,6 +143,7 @@ extension TextField {
                 cornerRadius: cornerRadius ?? self.cornerRadius,
                 borderColor: borderColor ?? self.borderColor,
                 backgroundColor: backgroundColor ?? self.backgroundColor,
+                tintColor: tintColor ?? self.tintColor,
                 keyboardType: keyboardType ?? self.keyboardType,
                 textContentType: textContentType ?? self.textContentType,
                 autocapitalizationType: autocapitalizationType ?? self.autocapitalizationType,

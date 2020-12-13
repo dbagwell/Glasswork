@@ -86,6 +86,7 @@ public final class TextField: UITextField {
             self.layer.borderColor = style.borderColor.cgColor
             self.layer.cornerRadius = style.cornerRadius
             self.backgroundColor = style.backgroundColor
+            self.tintColor = style.tintColor
             self.keyboardType = style.keyboardType
             self.textContentType = style.textContentType
             self.autocapitalizationType = style.autocapitalizationType
