@@ -57,7 +57,7 @@ public final class Button: Control {
         view.layer.borderColor = self.style.borderColor.cgColor
         view.backgroundColor = self.style.backgroundColor
         
-        view.addSubview(titleLabel, { make in
+        view.addSubview(self.titleLabel, { make in
             make.top.bottom.equalToSuperview()
             make.left.right.equalToSuperview().inset(15)
         })
@@ -73,8 +73,13 @@ public final class Button: Control {
         
         super.init(frame: .zero)
         
+        if style.backgroundColor == .clear {
+            self.backgroundColor = .clear
+        } else {
+            self.backgroundColor = .init(light: .white, dark: .black)
+        }
+        
         self.layer.cornerRadius = self.style.cornerRadius
-        self.backgroundColor = .white
         self.titleLabel.text = title
         
         if let action = action {
