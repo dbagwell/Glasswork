@@ -75,6 +75,25 @@ public final class TextField: UITextField {
     }
     
     
+    // MARK: - UITextField
+    
+    private func realTextRect(forBounds bounds: CGRect) -> CGRect {
+        return self.layer.borderWidth > 0 ? bounds.inset(by: UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)) : bounds
+    }
+    
+    public override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return self.realTextRect(forBounds: bounds)
+    }
+    
+    public override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
+        return self.realTextRect(forBounds: bounds)
+    }
+    
+    public override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return self.realTextRect(forBounds: bounds)
+    }
+    
+    
     // MARK: - Methods
     
     private func apply(_ style: Style) {
