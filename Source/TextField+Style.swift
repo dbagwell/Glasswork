@@ -36,14 +36,14 @@ extension TextField {
         
         public init(
             `default`: Style,
-            focused: Style,
-            error: Style,
-            focusedError: Style
+            focused: Style? = nil,
+            error: Style? = nil,
+            focusedError: Style? = nil
         ) {
             self.default = `default`
-            self.focused = focused
-            self.error = error
-            self.focusedError = focusedError
+            self.focused = focused ?? `default`
+            self.error = error ?? `default`
+            self.focusedError = focusedError ?? error ?? `default`
         }
         
     }
