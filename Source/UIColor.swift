@@ -77,4 +77,14 @@ extension UIColor {
         }
     }
     
+    public var image: UIImage? {
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: 1, height: 1), false, 0)
+        let context = UIGraphicsGetCurrentContext()
+        self.setFill()
+        context?.fill(CGRect(x: 0, y: 0, width: 1, height: 1))
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
 }

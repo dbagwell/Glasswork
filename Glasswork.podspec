@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = 'Glasswork'
-  s.version          = '1.16.0'
+  s.version          = '1.17.0'
   s.license          = 'MIT'
   s.summary          = 'Glasswork'
   s.homepage         = 'https://github.com/dbagwell/Glasswork'
   s.author           = 'David Bagwell'
-  s.source           = { :git => 'https://github.com/dbagwell/Glasswork.git', :tag => '1.16.0' }
+  s.source           = { :git => 'https://github.com/dbagwell/Glasswork.git', :tag => '1.17.0' }
 
   s.ios.deployment_target = '11.0'
   s.swift_version = '5.0'
