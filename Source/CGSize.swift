@@ -20,16 +20,13 @@
 
 import UIKit
 
-extension UIImage {
+extension CGSize {
     
-    public var template: UIImage {
-        return self.withRenderingMode(.alwaysTemplate)
-    }
-    
-    public func resized(to size: CGSize) -> UIImage {
-        return UIGraphicsImageRenderer(size: size).image { _ in
-            draw(in: CGRect(origin: .zero, size: size))
-        }
+    public func floored() -> CGSize {
+        var size = self
+        size.width = floor(size.width)
+        size.height = floor(size.height)
+        return size
     }
     
 }
