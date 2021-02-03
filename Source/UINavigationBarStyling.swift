@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import QuickLook
 import UIKit
 
 public protocol UINavigationBarStyling where Self: UIViewController {
@@ -37,6 +38,12 @@ extension UINavigationBarStyling {
     ///
     /// This should usually be called in viewWillAppear of UIViewControllers
     public func styleNavigationBar() {
+        // Don't style QuickLook Previews
+        guard
+            !(self.parent is QLPreviewController),
+            !(self.navigationController?.parent is QLPreviewController)
+        else { return }
+        
         if let navigationController = self as? UINavigationController {
             navigationController.navigationBar.style(with: self.navigationBarStyle ?? .default)
             return
