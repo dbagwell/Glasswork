@@ -90,6 +90,13 @@ extension UITableView {
         return cell
     }
     
+    public func scrollToBottom(animated: Bool) {
+        let section = self.numberOfSections - 1
+        let row = self.numberOfRows(inSection: section) - 1
+        let indexPath = IndexPath(row: row, section: section)
+        self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+    }
+    
 }
 
 fileprivate final class TableHeaderView: UIView {
