@@ -62,7 +62,12 @@ extension UITableView {
         }
     }
     
-    public func setHeaderView(_ headerView: UIView) {
+    public func setHeaderView(_ headerView: UIView?) {
+        guard let headerView = headerView else {
+            self.tableHeaderView = nil
+            return
+        }
+        
         let view = TableHeaderView()
         view.addSubview(headerView, { make in
             make.edges.equalToSuperview()
@@ -71,7 +76,12 @@ extension UITableView {
         self.tableHeaderView = view
     }
     
-    public func setFooterView(_ footerView: UIView) {
+    public func setFooterView(_ footerView: UIView?) {
+        guard let footerView = footerView else {
+            self.tableFooterView = nil
+            return
+        }
+        
         let view = TableFooterView()
         view.addSubview(footerView, { make in
             make.edges.equalToSuperview()
@@ -95,6 +105,14 @@ extension UITableView {
         let row = self.numberOfRows(inSection: section) - 1
         let indexPath = IndexPath(row: row, section: section)
         self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+        
+        DispatchQueue.main.async(execute: {
+            // The code above doesn't account for the footer view,
+            // but the code below doesn't always work on its own (possibly because of reloads interupting it?),
+            // so we combine both to get the desired result.
+            let bottom = CGRect(x: 0, y: self.contentSize.height-1, width: 1, height: 1)
+            self.scrollRectToVisible(bottom, animated: animated)
+        })
     }
     
 }
@@ -104,10 +122,10 @@ fileprivate final class TableHeaderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let height = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let height = self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         self.frame.size.height = height
         
-        if let tableView = superview as? UITableView {
+        if let tableView = self.superview as? UITableView {
             tableView.tableHeaderView = self
         }
     }
@@ -119,10 +137,10 @@ fileprivate final class TableFooterView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let height = systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let height = self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         self.frame.size.height = height
         
-        if let tableView = superview as? UITableView {
+        if let tableView = self.superview as? UITableView {
             tableView.tableFooterView = self
         }
     }
