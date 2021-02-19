@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import Rebar
 import UIKit
 
 extension UINavigationController {
@@ -72,6 +73,22 @@ extension UINavigationController {
                 completion?()
             })
         }
+    }
+    
+    public func pushViewController(
+        _ viewController: UIViewController,
+        animated: Bool = true,
+        removingViewControllersAfter previousViewController: UIViewController,
+        completion: (() -> Void)? = nil
+    ) {
+        let viewControllersToRemove = self.viewControllers.suffix(while: { $0 !== previousViewController })
+        self.pushViewController(viewController, animated: animated, completion: {
+            self.viewControllers.removeAll(where: { viewController in
+                viewControllersToRemove.contains(where: { $0 === viewController })
+            })
+            
+            completion?()
+        })
     }
     
 }
