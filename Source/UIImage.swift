@@ -28,7 +28,21 @@ extension UIImage {
     
     public func resized(to size: CGSize) -> UIImage {
         return UIGraphicsImageRenderer(size: size).image { _ in
-            draw(in: CGRect(origin: .zero, size: size))
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+    
+    public func aspectResized(toWidth width: CGFloat) -> UIImage {
+        let size = CGSize(width: width, height: self.size.height * width / self.size.width)
+        return UIGraphicsImageRenderer(size: size).image { _ in
+            self.draw(in: CGRect(origin: .zero, size: size))
+        }
+    }
+    
+    public func aspectResized(toHeight height: CGFloat) -> UIImage {
+        let size = CGSize(width: self.size.width * height / self.size.height, height: height)
+        return UIGraphicsImageRenderer(size: size).image { _ in
+            self.draw(in: CGRect(origin: .zero, size: size))
         }
     }
     
