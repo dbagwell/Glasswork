@@ -137,7 +137,12 @@ fileprivate final class TableFooterView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let height = self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let height = self.systemLayoutSizeFitting(
+            CGSize(width: self.superview?.frame.width ?? 0, height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: UILayoutPriority.required,
+            verticalFittingPriority: UILayoutPriority.defaultLow
+        ).height
+        
         self.frame.size.height = height
         
         if let tableView = self.superview as? UITableView {
