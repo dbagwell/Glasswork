@@ -1,20 +1,28 @@
 PODS:
-  - Rebar (2.2.3)
+  - Rebar (2.3.0)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
-  - Rebar
+  - Rebar (from `https://github.com/dbagwell/Rebar`)
   - SnapKit
 
 SPEC REPOS:
   trunk:
-    - Rebar
     - SnapKit
 
+EXTERNAL SOURCES:
+  Rebar:
+    :git: https://github.com/dbagwell/Rebar
+
+CHECKOUT OPTIONS:
+  Rebar:
+    :commit: d1ce5097f31e7c4eb787d4151eb5820436797098
+    :git: https://github.com/dbagwell/Rebar
+
 SPEC CHECKSUMS:
-  Rebar: 260ca897f2fe864a359ec5d31abe5e752da5d21f
+  Rebar: 6d9b01dbeb6198e1d7e44e858d0cd787bd1efd55
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 6c6da6c6d1205d0b5c7b3fe4edc55dbd9c629da7
+PODFILE CHECKSUM: 682fc006b9061ade0b8dcf5bc8a08c0fab661a4c
 
 COCOAPODS: 1.10.0

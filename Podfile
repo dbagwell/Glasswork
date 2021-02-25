@@ -7,6 +7,6 @@ end
 target 'Glasswork' do
 
     pod 'SnapKit'
-    pod 'Rebar'
+    pod 'Rebar', :git => 'https://github.com/dbagwell/Rebar'
 
 end
