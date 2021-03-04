@@ -52,7 +52,7 @@ extension UINavigationBarStyling {
         // Only direct children of the navigation controller are allowed to style the navigation bar
         guard let navigationController = self.parent as? UINavigationController else { return }
         
-        let previousViewController = navigationController.viewControllers.dropLast().last as? UINavigationBarStyling
+        let previousViewController = navigationController.viewControllers[safe: navigationController.viewControllers.count-2] as? UINavigationBarStyling
         let previousStyle = previousViewController?.navigationBarStyle
         let stylingNavigationController = navigationController as? UINavigationBarStyling
         let navStyle = stylingNavigationController?.navigationBarStyle
