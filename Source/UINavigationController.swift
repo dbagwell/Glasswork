@@ -78,6 +78,34 @@ extension UINavigationController {
     public func pushViewController(
         _ viewController: UIViewController,
         animated: Bool = true,
+        removingPreviousViewControllers viewControllersToRemove: [UIViewController],
+        completion: (() -> Void)? = nil
+    ) {
+        self.pushViewController(
+            viewController,
+            animated: animated,
+            removingPreviousViewControllersWhere: { viewController in
+                viewControllersToRemove.contains(where: { $0 === viewController })
+            },
+            completion: completion
+        )
+    }
+    
+    public func pushViewController(
+        _ viewController: UIViewController,
+        animated: Bool = true,
+        removingPreviousViewControllersWhere condition: @escaping (UIViewController) -> Bool,
+        completion: (() -> Void)? = nil
+    ) {
+        self.pushViewController(viewController, animated: animated, completion: {
+            self.viewControllers.removeAll(where: condition)
+            completion?()
+        })
+    }
+    
+    public func pushViewController(
+        _ viewController: UIViewController,
+        animated: Bool = true,
         removingViewControllersAfter previousViewController: UIViewController,
         completion: (() -> Void)? = nil
     ) {
