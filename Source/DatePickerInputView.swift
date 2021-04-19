@@ -64,7 +64,8 @@ public final class DatePickerInputView: UIView {
         let toolbar = UIToolbar(
             rightButtonTitle: "Select",
             tintColor: selectButtonColor,
-            action: {
+            action: { [weak self] in
+                guard let self = self else { return }
                 self.selectButtonAction(self.datePicker.date)
                 self.responder?.resignFirstResponder()
             }
