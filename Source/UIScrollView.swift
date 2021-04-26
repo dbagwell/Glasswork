@@ -24,10 +24,12 @@ extension UIScrollView {
     
     public var bottomOffset: CGFloat {
         return self.bounds.height
-            - self.contentInset.top
-            - self.contentInset.bottom
             - self.contentSize.height
             + self.contentOffset.y
+    }
+    
+    public var bottomOffsetFromInset: CGFloat {
+        return self.bottomOffset - self.contentInset.bottom
     }
     
 }

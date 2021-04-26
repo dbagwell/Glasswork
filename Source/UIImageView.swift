@@ -23,8 +23,8 @@ import UIKit
 extension UIImageView {
     
     public convenience init(
-        image: UIImage?,
-        templateColor: UIColor?,
+        image: UIImage? = nil,
+        templateColor: UIColor? = nil,
         contentMode: UIView.ContentMode = .scaleToFill
     ) {
         let image = templateColor != nil ? image?.template : image
