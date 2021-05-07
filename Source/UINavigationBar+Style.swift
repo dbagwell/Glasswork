@@ -38,6 +38,8 @@ extension UINavigationBar {
         public let backgroundColor: UIColor
         public let foregroundColor: UIColor
         public let barStyle: UIBarStyle
+        public let titleFont: UIFont?
+        public let titleColor: UIColor?
         public let titleView: (() -> UIView)?
         
         
@@ -47,11 +49,15 @@ extension UINavigationBar {
             backgroundColor: UIColor,
             foregroundColor: UIColor,
             barStyle: UIBarStyle,
+            titleFont: UIFont? = nil,
+            titleColor: UIColor? = nil,
             titleView: (() -> UIView)? = nil
         ) {
             self.backgroundColor = backgroundColor
             self.foregroundColor = foregroundColor
             self.barStyle = barStyle
+            self.titleFont = titleFont
+            self.titleColor = titleColor
             self.titleView = titleView
         }
         
@@ -64,8 +70,17 @@ extension UINavigationBar {
         self.barTintColor = style.backgroundColor
         self.backgroundColor = style.backgroundColor
         self.setBackgroundImage(UIColor.clear.image, for: .default)
-        self.titleTextAttributes = [NSAttributedString.Key.foregroundColor: style.foregroundColor]
         self.shadowImage = UIImage()
+        
+        if self.titleTextAttributes == nil {
+            self.titleTextAttributes = [.foregroundColor: style.titleColor ?? style.foregroundColor]
+        } else {
+            self.titleTextAttributes?[.foregroundColor] = style.titleColor ?? style.foregroundColor
+        }
+        
+        if let font = style.titleFont {
+            self.titleTextAttributes?[.font] = font
+        }
     }
     
 }

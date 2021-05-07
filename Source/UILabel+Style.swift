@@ -34,6 +34,10 @@ extension UILabel {
         public let lineLimit: Int
         public let minimumScale: CGFloat
         
+        public var font: UIFont {
+            return self.family.font(ofSize: self.size, weight: self.weight)
+        }
+        
         
         // MARK: - Init
         
