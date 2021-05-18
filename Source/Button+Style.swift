@@ -31,6 +31,7 @@ extension Button {
         public let textSize: CGFloat
         public let textColor: UIColor
         public let textAlignment: NSTextAlignment
+        public let horizontalTextPadding: CGFloat
         public let borderWidth: CGFloat
         public let cornerRadius: CGFloat
         public let borderColor: UIColor
@@ -47,6 +48,7 @@ extension Button {
             textSize: CGFloat,
             textColor: UIColor,
             textAlignment: NSTextAlignment,
+            horizontalTextPadding: CGFloat = 0,
             borderWidth: CGFloat = 0,
             cornerRadius: CGFloat = 0,
             borderColor: UIColor = .clear,
@@ -59,6 +61,7 @@ extension Button {
             self.textSize = textSize
             self.textColor = textColor
             self.textAlignment = textAlignment
+            self.horizontalTextPadding = horizontalTextPadding
             self.borderWidth = borderWidth
             self.cornerRadius = cornerRadius
             self.borderColor = borderColor
@@ -76,6 +79,7 @@ extension Button {
             textSize: CGFloat? = nil,
             textColor: UIColor? = nil,
             textAlignment: NSTextAlignment? = nil,
+            horizontalTextPadding: CGFloat? = nil,
             borderWidth: CGFloat? = nil,
             cornerRadius: CGFloat? = nil,
             borderColor: UIColor? = nil,
@@ -89,6 +93,7 @@ extension Button {
                 textSize: textSize ?? self.textSize,
                 textColor: textColor ?? self.textColor,
                 textAlignment: textAlignment ?? self.textAlignment,
+                horizontalTextPadding: horizontalTextPadding ?? self.horizontalTextPadding,
                 borderWidth: borderWidth ?? self.borderWidth,
                 cornerRadius: cornerRadius ?? self.cornerRadius,
                 borderColor: borderColor ?? self.borderColor,

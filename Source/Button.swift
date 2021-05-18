@@ -59,7 +59,7 @@ public final class Button: Control {
         
         view.addSubview(self.titleLabel, { make in
             make.top.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().inset(15)
+            make.left.right.equalToSuperview().inset(self.style.horizontalTextPadding)
         })
         
         return view
