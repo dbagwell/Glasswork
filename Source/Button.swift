@@ -26,6 +26,15 @@ public final class Button: Control {
     
     public let style: Style
     
+    public var title: String? {
+        get {
+            return self.titleLabel.text
+        }
+        set {
+            self.titleLabel.text = newValue
+        }
+    }
+    
     override public var primaryAction: UIControl.Event {
         return .touchUpInside
     }
