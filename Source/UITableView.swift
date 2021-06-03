@@ -68,12 +68,13 @@ extension UITableView {
             return
         }
         
-        let view = TableHeaderView()
-        view.addSubview(headerView, { make in
-            make.edges.equalToSuperview()
+        self.tableHeaderView = headerView
+        headerView.snp.remakeConstraints({ make in
+            make.top.centerX.width.equalToSuperview()
         })
         
-        self.tableHeaderView = view
+        self.layoutIfNeeded()
+        self.tableHeaderView = headerView
     }
     
     public func setFooterView(_ footerView: UIView?) {
@@ -82,12 +83,18 @@ extension UITableView {
             return
         }
         
-        let view = TableFooterView()
-        view.addSubview(footerView, { make in
+        // Set the initial height to the autolayout computed height to prevent layout warnings.
+        let wrapperView = TableFooterView(frame: .init(x: 0, y: 0, width: 0, height: footerView.systemLayoutSizeFitting(
+            CGSize(width: self.frame.width, height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: UILayoutPriority.required,
+            verticalFittingPriority: UILayoutPriority.defaultLow
+        ).height))
+        
+        wrapperView.addSubview(footerView, { make in
             make.edges.equalToSuperview()
         })
         
-        self.tableFooterView = view
+        self.tableFooterView = wrapperView
     }
     
     public func dequeueCell<CellType: UITableViewCell>(for indexPath: IndexPath) -> CellType {
@@ -113,26 +120,6 @@ extension UITableView {
             let bottom = CGRect(x: 0, y: self.contentSize.height-1, width: 1, height: 1)
             self.scrollRectToVisible(bottom, animated: animated)
         })
-    }
-    
-}
-
-fileprivate final class TableHeaderView: UIView {
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let height = self.systemLayoutSizeFitting(
-            CGSize(width: self.superview?.frame.width ?? 0, height: UIView.layoutFittingCompressedSize.height),
-            withHorizontalFittingPriority: UILayoutPriority.required,
-            verticalFittingPriority: UILayoutPriority.defaultLow
-        ).height
-        
-        self.frame.size.height = height
-        
-        if let tableView = self.superview as? UITableView {
-            tableView.tableHeaderView = self
-        }
     }
     
 }
