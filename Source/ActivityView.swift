@@ -20,7 +20,14 @@
 
 import UIKit
 
-public class ActivityView: UIView {
+public protocol ActivityView: UIView {
+    init(title: String?)
+    var title: String? { get set }
+    func show(on superview: UIView)
+    func hide()
+}
+
+public class DefaultActivityView: UIView, ActivityView {
     
     // MARK: - Properties
     
@@ -73,7 +80,7 @@ public class ActivityView: UIView {
     
     // MARK: - Init
     
-    public init(title: String? = nil) {
+    public required init(title: String? = nil) {
         super.init(frame: .zero)
         
         self.backgroundColor = UIColor.black.withAlphaComponent(0.3)

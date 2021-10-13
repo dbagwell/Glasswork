@@ -38,4 +38,8 @@ extension UIApplication {
         self.topViewController.showAlert(withTitle: title, message: message)
     }
     
+    public func performActivity(_ activity: (@escaping (Result<Void, String>) -> Void) -> Void, withTitle title: String? = nil) {
+        self.keyWindow!.performActivity(activity, withTitle: title)
+    }
+    
 }

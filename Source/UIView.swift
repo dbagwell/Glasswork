@@ -174,6 +174,8 @@ extension UIView {
     
     // MARK: - Activity View
     
+    public static var activityViewClass: ActivityView.Type = DefaultActivityView.self
+    
     private var currentActivityView: ActivityView? {
         return self.subviews.compactMap({ $0 as? ActivityView }).first
     }
@@ -184,7 +186,7 @@ extension UIView {
             return
         }
         
-        ActivityView(title: title).show(on: self)
+        UIView.activityViewClass.init(title: title).show(on: self)
     }
     
     public func hideActivityView() {
