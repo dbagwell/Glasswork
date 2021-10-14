@@ -39,7 +39,12 @@ extension UIApplication {
     }
     
     public func performActivity(_ activity: (@escaping (Result<Void, String>) -> Void) -> Void, withTitle title: String? = nil) {
-        self.keyWindow!.performActivity(activity, withTitle: title)
+        guard let window = self.keyWindow else {
+            activity({ _ in })
+            return
+        }
+        
+        window.performActivity(activity, withTitle: title)
     }
     
 }
