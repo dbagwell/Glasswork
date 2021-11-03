@@ -1,5 +1,5 @@
 PODS:
-  - Rebar (2.3.0)
+  - Rebar (3.0.0)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
@@ -16,11 +16,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Rebar:
-    :commit: d1ce5097f31e7c4eb787d4151eb5820436797098
+    :commit: 8b5bcab811999561def2702486fdefcf2d16e89f
     :git: https://github.com/dbagwell/Rebar
 
 SPEC CHECKSUMS:
-  Rebar: 6d9b01dbeb6198e1d7e44e858d0cd787bd1efd55
+  Rebar: 9c22cecf59873136af16dff474fa34c7c91e57de
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
 PODFILE CHECKSUM: 682fc006b9061ade0b8dcf5bc8a08c0fab661a4c

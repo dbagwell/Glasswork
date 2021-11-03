@@ -13,6 +13,6 @@ Pod::Spec.new do |s|
   s.source_files     = 'Source/**/*'
   
   s.dependency 'SnapKit'
-  s.dependency 'Rebar'
+  s.dependency 'Rebar', '~> 3.0'
 
 end
