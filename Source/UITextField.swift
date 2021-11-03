@@ -20,6 +20,24 @@
 
 import UIKit
 
+extension Array where Element: UITextField {
+    
+    public func connect() {
+        for (index, field) in self.enumerated() {
+            if let nextField = self[safe: index+1] {
+                field.addAction(for: .primaryActionTriggered, action: { [weak nextField] in
+                    nextField?.becomeFirstResponder()
+                })
+            } else {
+                field.addAction(for: .primaryActionTriggered, action: { [weak field] in
+                    field?.resignFirstResponder()
+                })
+            }
+        }
+    }
+    
+}
+
 extension UITextField {
     
     public func useReturnKeyToolbarAsInputAccessoryView(tintColor: UIColor? = nil) {

@@ -87,4 +87,22 @@ extension UIColor {
         return image
     }
     
+    public static func random(seed: String) -> UIColor {
+        var total: Int = 0
+        for unicode in seed.unicodeScalars {
+            total += Int(UInt32(unicode))
+        }
+        
+        srand48(total * 200)
+        let red = CGFloat(drand48())
+        
+        srand48(total)
+        let green = CGFloat(drand48())
+        
+        srand48(total / 200)
+        let blue = CGFloat(drand48())
+        
+        return UIColor(red: red, green: green, blue: blue, alpha: 1)
+    }
+    
 }

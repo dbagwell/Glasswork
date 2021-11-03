@@ -22,9 +22,12 @@ import UIKit
 
 extension UIAlertController {
     
-    public static func alert(withTitle title: String? = nil, message: String? = nil) -> UIAlertController {
+    public static func alert(withTitle title: String? = nil, message: String? = nil, action: (() -> Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            action?()
+        }))
+        
         return alert
     }
     

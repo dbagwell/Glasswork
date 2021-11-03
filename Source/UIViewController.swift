@@ -46,4 +46,24 @@ extension UIViewController {
         self.present(UIAlertController.alert(withTitle: title, message: message), animated: true, completion: nil)
     }
     
+    public func presentNavigationController(
+        with viewController: UIViewController,
+        fullScreen: Bool = false,
+        animated: Bool = true,
+        completion: (() -> Void)? = nil
+    ) {
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.dismissAnimated))
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
+        if fullScreen {
+            navigationController.modalPresentationStyle = .fullScreen
+        }
+        
+        self.present(navigationController, animated: animated, completion: completion)
+    }
+    
+    @objc private func dismissAnimated() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
