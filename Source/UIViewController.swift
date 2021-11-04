@@ -46,12 +46,13 @@ extension UIViewController {
         self.present(UIAlertController.alert(withTitle: title, message: message), animated: true, completion: nil)
     }
     
+    @discardableResult
     public func presentNavigationController(
         with viewController: UIViewController,
         fullScreen: Bool = false,
         animated: Bool = true,
         completion: (() -> Void)? = nil
-    ) {
+    ) -> UINavigationController {
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.dismissAnimated))
         let navigationController = UINavigationController(rootViewController: viewController)
         
@@ -60,6 +61,8 @@ extension UIViewController {
         }
         
         self.present(navigationController, animated: animated, completion: completion)
+        
+        return navigationController
     }
     
     @objc private func dismissAnimated() {
