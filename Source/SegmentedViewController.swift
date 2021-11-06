@@ -39,6 +39,7 @@ open class SegmentedViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let backgroundColor: UIColor
     private let inactiveSegmentTitleStyle: UILabel.Style
     private let activeSegmentTitleStyle: UILabel.Style
     private let segmentBadgeTextStyle: UILabel.Style
@@ -141,6 +142,7 @@ open class SegmentedViewController: UIViewController {
     // MARK: - Init
     
     public init(
+        backgroundColor: UIColor = .white,
         inactiveSegmentTitleStyle: UILabel.Style,
         activeSegmentTitleStyle: UILabel.Style,
         segmentBadgeTextStyle: UILabel.Style,
@@ -148,6 +150,7 @@ open class SegmentedViewController: UIViewController {
         segmentSeparatorColor: UIColor,
         segments: [Segment] = []
     ) {
+        self.backgroundColor = backgroundColor
         self.inactiveSegmentTitleStyle = inactiveSegmentTitleStyle
         self.activeSegmentTitleStyle = activeSegmentTitleStyle
         self.segmentBadgeTextStyle = segmentBadgeTextStyle
@@ -165,7 +168,7 @@ open class SegmentedViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = self.backgroundColor
         
         self.view.addSubview(self.stackView, { make in
             make.edges.equalToSuperview()
