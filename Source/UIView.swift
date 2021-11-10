@@ -35,6 +35,15 @@ extension UIView {
         self.subviews.forEach({ $0.removeFromSuperview() })
     }
     
+    // MARK: - Color Related
+    
+    public var superBackgroundColor: UIColor? {
+        if let color = self.superview?.backgroundColor, color != .clear {
+            return color
+        } else {
+            return self.superview?.superBackgroundColor
+        }
+    }
     
     // MARK: - Hiding
     

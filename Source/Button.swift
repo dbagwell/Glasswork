@@ -82,12 +82,6 @@ public final class Button: Control {
         
         super.init(frame: .zero)
         
-        if style.backgroundColor == .clear {
-            self.backgroundColor = .clear
-        } else {
-            self.backgroundColor = .init(light: .white, dark: .black)
-        }
-        
         self.layer.cornerRadius = self.style.cornerRadius
         self.titleLabel.text = title
         
@@ -109,6 +103,16 @@ public final class Button: Control {
     
     public override var intrinsicContentSize: CGSize {
         return .init(width: self.style.width ?? super.intrinsicContentSize.width, height: self.style.height)
+    }
+    
+    public override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        if self.style.backgroundColor != .clear {
+            // This has the same effect as if there were no background color,
+            // but without letting partial elements behind the button show through when the button is hightlighted or disabled.
+            self.backgroundColor = self.superBackgroundColor
+        }
     }
     
 }
