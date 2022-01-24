@@ -108,8 +108,17 @@ extension UITableView {
     }
     
     public func scrollToBottom(animated: Bool) {
-        let section = self.numberOfSections - 1
-        let row = self.numberOfRows(inSection: section) - 1
+        guard self.numberOfSections > 0 else { return }
+        
+        var section = self.numberOfSections - 1
+        var row = self.numberOfRows(inSection: section) - 1
+        
+        while row < 0 {
+            guard section > 0 else { return }
+            section -= 1
+            row = self.numberOfRows(inSection: section) - 1
+        }
+        
         let indexPath = IndexPath(row: row, section: section)
         self.scrollToRow(at: indexPath, at: .bottom, animated: animated)
         
