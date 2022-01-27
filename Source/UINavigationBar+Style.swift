@@ -64,6 +64,35 @@ extension UINavigationBar {
     }
     
     public func style(with style: Style) {
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            
+            if style.backgroundColor == .clear {
+                appearance.configureWithTransparentBackground()
+            } else {
+                appearance.configureWithOpaqueBackground()
+            }
+            
+            appearance.backgroundColor = style.backgroundColor
+            appearance.shadowImage = UIImage()
+            
+            if let attributes = self.titleTextAttributes {
+                appearance.titleTextAttributes = attributes
+                appearance.titleTextAttributes[.foregroundColor] = style.titleColor ?? style.foregroundColor
+            } else {
+                appearance.titleTextAttributes = [.foregroundColor: style.titleColor ?? style.foregroundColor]
+            }
+            
+            if let font = style.titleFont {
+                appearance.titleTextAttributes[.font] = font
+            }
+            
+            self.standardAppearance = appearance
+            self.compactAppearance = appearance
+            self.scrollEdgeAppearance = appearance
+            self.compactScrollEdgeAppearance = appearance
+        }
+        
         self.barStyle = style.barStyle
         self.isTranslucent = style.backgroundColor == .clear
         self.tintColor = style.foregroundColor
