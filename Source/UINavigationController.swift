@@ -21,49 +21,44 @@
 import Rebar
 import UIKit
 
-extension UINavigationController {
+extension UINavigationController: NavigationController {
     
-    /// Pushes the provided view controller onto the navigation stack in an animated fashion with the provided completion.
-    public func pushViewController(_ viewController: UIViewController, completion: (() -> Void)? = nil) {
-        self.pushViewController(viewController, animated: true, completion: completion)
+    public func push(
+        _ viewController: UIViewController,
+        animated: Bool,
+        completion: (() -> Void)?
+    ) {
+        self.pushViewController(
+            viewController,
+            animated: animated
+        )
+        
+        self.callCompletionAfterTransition(
+            animated: animated,
+            completion
+        )
     }
     
-    public func pushViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
-        self.pushViewController(viewController, animated: animated)
-        self.callCompletionAfterTransition(completion, animated: animated)
+    public func pop(
+        to viewController: UIViewController,
+        animated: Bool,
+        completion: (() -> Void)?
+    ) {
+        self.popToViewController(
+            viewController,
+            animated: animated
+        )
+        
+        self.callCompletionAfterTransition(
+            animated: animated,
+            completion
+        )
     }
     
-    /// Pops the last view controller on the navigation stack in an animated fashion with the provided completion.
-    public func popViewController(completion: (() -> Void)? = nil) {
-        self.popViewController(animated: true, completion: completion)
-    }
-    
-    public func popViewController(animated: Bool, completion: (() -> Void)?) {
-        self.popViewController(animated: animated)
-        self.callCompletionAfterTransition(completion, animated: animated)
-    }
-    
-    /// Pops to the specified view controller in an animated fashion with the provided completion, if it is in the navigation stack.
-    public func popToViewController(_ viewController: UIViewController, completion: (() -> Void)? = nil) {
-        self.popToViewController(viewController, animated: true, completion: completion)
-    }
-    
-    public func popToViewController(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
-        self.popToViewController(viewController, animated: animated)
-        self.callCompletionAfterTransition(completion, animated: animated)
-    }
-    
-    /// Pops to the root view controller of the navigation stack in an animated fashion with the provided completion.
-    public func popToRootViewController(completion: (() -> Void)? = nil) {
-        self.popToRootViewController(animated: true, completion: completion)
-    }
-    
-    public func popToRootViewController(animated: Bool, completion: (() -> Void)?) {
-        self.popToRootViewController(animated: animated)
-        self.callCompletionAfterTransition(completion, animated: animated)
-    }
-    
-    private func callCompletionAfterTransition(_ completion: (() -> Void)?, animated: Bool) {
+    private func callCompletionAfterTransition(
+        animated: Bool,
+        _ completion: (() -> Void)?
+    ) {
         if let coordinator = self.transitionCoordinator, animated {
             coordinator.animate(alongsideTransition: nil, completion: { _ in
                 completion?()
@@ -73,50 +68,6 @@ extension UINavigationController {
                 completion?()
             })
         }
-    }
-    
-    public func pushViewController(
-        _ viewController: UIViewController,
-        animated: Bool = true,
-        removingPreviousViewControllers viewControllersToRemove: [UIViewController],
-        completion: (() -> Void)? = nil
-    ) {
-        self.pushViewController(
-            viewController,
-            animated: animated,
-            removingPreviousViewControllersWhere: { viewController in
-                viewControllersToRemove.contains(where: { $0 === viewController })
-            },
-            completion: completion
-        )
-    }
-    
-    public func pushViewController(
-        _ viewController: UIViewController,
-        animated: Bool = true,
-        removingPreviousViewControllersWhere condition: @escaping (UIViewController) -> Bool,
-        completion: (() -> Void)? = nil
-    ) {
-        self.pushViewController(viewController, animated: animated, completion: {
-            self.viewControllers.removeAll(where: condition)
-            completion?()
-        })
-    }
-    
-    public func pushViewController(
-        _ viewController: UIViewController,
-        animated: Bool = true,
-        removingViewControllersAfter previousViewController: UIViewController,
-        completion: (() -> Void)? = nil
-    ) {
-        let viewControllersToRemove = self.viewControllers.suffix(while: { $0 !== previousViewController })
-        self.pushViewController(viewController, animated: animated, completion: {
-            self.viewControllers.removeAll(where: { viewController in
-                viewControllersToRemove.contains(where: { $0 === viewController })
-            })
-            
-            completion?()
-        })
     }
     
 }
