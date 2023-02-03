@@ -38,6 +38,18 @@ extension UIWindow {
         )
     }
     
+    public func overlay(
+        _ viewController: UIViewController,
+        animated: Bool = true,
+        completion: (() -> Void)? = nil
+    ) {
+        self.topViewController?.overlay(
+            viewController,
+            animated: animated,
+            completion: completion
+        )
+    }
+    
     public func showAlert(withTitle title: String? = nil, message: String? = nil) {
         self.topViewController?.showAlert(withTitle: title, message: message)
     }

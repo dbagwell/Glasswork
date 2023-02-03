@@ -84,6 +84,11 @@ extension UIViewController {
             completion: completion
         )
     }
+    
+    public func overlay(_ viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
+        viewController.transitioningDelegate = OverlayTransitioningDelegate.shared
+        viewController.modalPresentationStyle = .custom
+        self.present(viewController, animated: animated, completion: completion)
     }
     
 }
