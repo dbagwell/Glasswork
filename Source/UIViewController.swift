@@ -53,7 +53,7 @@ extension UIViewController {
         animated: Bool = true,
         completion: (() -> Void)? = nil
     ) -> UINavigationController {
-        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.dismissAnimated))
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.dismiss))
         let navigationController = UINavigationController(rootViewController: viewController)
         
         if fullScreen {
@@ -65,8 +65,25 @@ extension UIViewController {
         return navigationController
     }
     
-    @objc private func dismissAnimated() {
-        self.dismiss(animated: true, completion: nil)
+    public func present(
+        _ viewController: UIViewController,
+        completion: (() -> Void)? = nil
+    ) {
+        self.present(
+            viewController,
+            animated: true,
+            completion: completion
+        )
+    }
+    
+    @objc public func dismiss(
+        completion: (() -> Void)? = nil
+    ) {
+        self.dismiss(
+            animated: true,
+            completion: completion
+        )
+    }
     }
     
 }
