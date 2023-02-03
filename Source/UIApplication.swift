@@ -30,24 +30,15 @@ extension UIApplication {
         }
     }
     
-    public var rootViewController: UIViewController? {
-        return self.primaryWindow?.rootViewController
+    public var activeWindow: UIWindow? {
+        return self.windows.first(where: { $0.isKeyWindow })
     }
     
-    public var topViewController: UIViewController? {
-        return self.rootViewController?.topViewController
-    }
-    
-    public func present(_ viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
-        self.topViewController?.present(viewController, animated: animated, completion: completion)
-    }
-    
-    public func showAlert(withTitle title: String? = nil, message: String? = nil) {
-        self.topViewController?.showAlert(withTitle: title, message: message)
-    }
-    
-    public func performActivity(_ activity: (@escaping (Result<Void, String>) -> Void) -> Void, withTitle title: String? = nil) {
-        guard let window = self.keyWindow else {
+    public func performActivity(
+        _ activity: (@escaping (Result<Void, String>) -> Void) -> Void,
+        withTitle title: String? = nil
+    ) {
+        guard let window = self.activeWindow else {
             activity({ _ in })
             return
         }

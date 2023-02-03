@@ -214,7 +214,7 @@ extension UIView {
                     break
                     
                 case let .failure(errorMessage):
-                    UIApplication.shared.showAlert(message: errorMessage)
+                    self.window?.showAlert(message: errorMessage)
                 }
             })
         })
