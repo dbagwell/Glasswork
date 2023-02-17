@@ -31,4 +31,29 @@ extension UIAlertController {
         return alert
     }
     
+    public convenience init(
+        style: UIAlertController.Style,
+        title: String? = nil,
+        message: String? = nil,
+        sourceView: UIView? = nil,
+        actions: [UIAlertAction]
+    ) {
+        self.init(title: title, message: message, preferredStyle: style)
+        actions.forEach({ self.addAction($0) })
+        self.popoverPresentationController?.sourceView = sourceView
+    }
+    
+}
+
+extension UIAlertAction {
+    
+    public convenience init(
+        title: String,
+        style: UIAlertAction.Style = .default,
+        action: (() -> Void)? = nil
+    ) {
+        let handler: ((UIAlertAction) -> Void)? = action != nil ? { _ in action?() } : nil
+        self.init(title: title, style: style, handler: handler)
+    }
+    
 }
