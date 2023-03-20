@@ -68,13 +68,18 @@ extension UITableView {
             return
         }
         
-        self.tableHeaderView = headerView
-        headerView.snp.remakeConstraints({ make in
-            make.top.centerX.width.equalToSuperview()
+        // Set the initial height to the autolayout computed height to prevent layout warnings.
+        let wrapperView = TableHeaderView(frame: .init(x: 0, y: 0, width: 0, height: headerView.systemLayoutSizeFitting(
+            CGSize(width: self.frame.width, height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: UILayoutPriority.required,
+            verticalFittingPriority: UILayoutPriority.defaultLow
+        ).height))
+        
+        wrapperView.addSubview(headerView, { make in
+            make.edges.equalToSuperview()
         })
         
-        self.layoutIfNeeded()
-        self.tableHeaderView = headerView
+        self.tableHeaderView = wrapperView
     }
     
     public func setFooterView(_ footerView: UIView?) {
@@ -129,6 +134,26 @@ extension UITableView {
             let bottom = CGRect(x: 0, y: self.contentSize.height-1, width: 1, height: 1)
             self.scrollRectToVisible(bottom, animated: animated)
         })
+    }
+    
+}
+
+fileprivate final class TableHeaderView: UIView {
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        let height = self.systemLayoutSizeFitting(
+            CGSize(width: self.superview?.frame.width ?? 0, height: UIView.layoutFittingCompressedSize.height),
+            withHorizontalFittingPriority: UILayoutPriority.required,
+            verticalFittingPriority: UILayoutPriority.defaultLow
+        ).height
+        
+        self.frame.size.height = height
+        
+        if let tableView = self.superview as? UITableView {
+            tableView.tableHeaderView = self
+        }
     }
     
 }
