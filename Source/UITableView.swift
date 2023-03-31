@@ -45,6 +45,10 @@ extension UITableView {
         self.separatorColor = separatorColor
         self.separatorInset = separatorInset
         
+        if #available(iOS 15, *) {
+            self.sectionHeaderTopPadding = 0
+        }
+        
         if separatorStyle == .none {
             // ipadOS doesn't use .none properly
             self.separatorColor = .clear
