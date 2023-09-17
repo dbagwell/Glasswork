@@ -49,17 +49,44 @@ open class GradientView: UIView {
     
     // MARK: Properties
     
+    open var colors: [UIColor] {
+        didSet {
+            self.gradientLayer.colors = self.colors.map({ $0.cgColor })
+        }
+    }
+    
     private var gradientLayer = CAGradientLayer()
     private let direction: Direction
+    private var cornerRadiusObservation: NSKeyValueObservation?
     
     // MARK: Init
     
+    @available(*, deprecated, message: "Set the corner radius of the layer instead.")
     public init(colors: [UIColor], cornerRadius: CGFloat = 0.0, direction: Direction) {
+        self.colors = colors
         self.direction = direction
         
         super.init(frame: .zero)
         
-        self.addGradientToSublayer(colors: colors, cornerRadius: cornerRadius)
+        self.setBorder(radius: cornerRadius)
+        self.updateGradient()
+        
+        self.cornerRadiusObservation = self.layer.observe(\.cornerRadius, changeHandler: { _, _ in
+            self.updateGradient()
+        })
+    }
+    
+    public init(colors: [UIColor], direction: Direction) {
+        self.colors = colors
+        self.direction = direction
+        
+        super.init(frame: .zero)
+        
+        self.updateGradient()
+        
+        self.cornerRadiusObservation = self.layer.observe(\.cornerRadius, changeHandler: { _, _ in
+            self.updateGradient()
+        })
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -73,19 +100,25 @@ open class GradientView: UIView {
         self.gradientLayer.frame = self.bounds
     }
     
+    @available(*, deprecated, message: "Use the colors property instead.")
     public func updateColors(_ colors: [UIColor]) {
-        self.gradientLayer.colors = colors.map({ $0.cgColor })
+        self.colors = colors
     }
     
-    private func addGradientToSublayer(colors: [UIColor], cornerRadius: CGFloat = 0.0) {
+    private func updateGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
-        gradientLayer.colors = colors.map({ $0.cgColor })
+        gradientLayer.colors = self.colors.map({ $0.cgColor })
         gradientLayer.startPoint = self.direction.startPoint()
         gradientLayer.endPoint = self.direction.endPoint()
-        gradientLayer.cornerRadius = cornerRadius
+        gradientLayer.cornerRadius = self.layer.cornerRadius
         self.layer.insertSublayer(gradientLayer, at: 0)
+        self.gradientLayer.removeFromSuperlayer()
         self.gradientLayer = gradientLayer
+    }
+    
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        self.gradientLayer.colors = self.colors.map({ $0.cgColor })
     }
     
 }
