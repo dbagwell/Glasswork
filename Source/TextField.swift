@@ -26,6 +26,8 @@ public final class TextField: UITextField {
     
     // MARK: - Properties
     
+    private var currentStyle: Style
+    
     public var styles: Styles {
         didSet {
             self.updateStyle()
@@ -38,23 +40,12 @@ public final class TextField: UITextField {
         }
     }
     
-    private var widthConstraint: Constraint? {
-        willSet {
-            self.widthConstraint?.deactivate()
-        }
-    }
-    
-    private var heightConstraint: Constraint? {
-        willSet {
-            self.heightConstraint?.deactivate()
-        }
-    }
-    
     
     // MARK: - Init
     
     public init(styles: Styles) {
         self.styles = styles
+        self.currentStyle = styles.default
         
         super.init(frame: .zero)
         
@@ -111,6 +102,8 @@ public final class TextField: UITextField {
     }
     
     private func apply(_ style: Style) {
+        self.currentStyle = style
+        
         DispatchQueue.asyncToMainIfNeeded(execute: {
             self.font = style.textFamily.font(ofSize: style.textSize, weight: style.textWeight)
             self.textColor = style.textColor
@@ -126,16 +119,10 @@ public final class TextField: UITextField {
             self.autocorrectionType = style.autocorrectionType
             self.returnKeyType = style.returnKeyType
         })
-        
-        self.widthConstraint = nil
-        self.heightConstraint = nil
-        
-        self.snp.makeConstraints({ make in
-            make.height.equalTo(style.height)
-            if let width = style.width {
-                make.width.equalTo(width)
-            }
-        })
+    }
+    
+    public override var intrinsicContentSize: CGSize {
+        return .init(width: self.currentStyle.width ?? super.intrinsicContentSize.width, height: self.currentStyle.height)
     }
     
 }
