@@ -92,12 +92,9 @@ extension UITableView {
             return
         }
         
-        // Set the initial height to the autolayout computed height to prevent layout warnings.
-        let wrapperView = TableFooterView(frame: .init(x: 0, y: 0, width: 0, height: footerView.systemLayoutSizeFitting(
-            CGSize(width: self.frame.width, height: UIView.layoutFittingCompressedSize.height),
-            withHorizontalFittingPriority: UILayoutPriority.required,
-            verticalFittingPriority: UILayoutPriority.defaultLow
-        ).height))
+        let wrapperView = TableFooterView(frame: .zero)
+        
+        wrapperView.translatesAutoresizingMaskIntoConstraints = false
         
         wrapperView.addSubview(footerView, { make in
             make.edges.equalToSuperview()
@@ -166,6 +163,8 @@ fileprivate final class TableFooterView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        self.translatesAutoresizingMaskIntoConstraints = true
         
         let height = self.systemLayoutSizeFitting(
             CGSize(width: self.superview?.frame.width ?? 0, height: UIView.layoutFittingCompressedSize.height),
