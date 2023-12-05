@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import Rebar
 import UIKit
 
 public protocol NavigationController: AnyObject {
@@ -72,11 +73,24 @@ extension NavigationController {
         animated: Bool,
         completion: (() -> Void)?
     ) {
+        let viewControllersToRemove = self.viewControllers.filter(condition)
+        
+        if all(
+            viewController.navigationItem.leftBarButtonItem == nil,
+            viewController.navigationItem.leftBarButtonItems?.isEmpty ?? true,
+            viewControllersToRemove.count == self.viewControllers.count
+        ) {
+            viewController.navigationItem.leftBarButtonItem = .init(customView: .init())
+        }
+        
         self.push(
             viewController,
             animated: animated,
             completion: {
-                self.viewControllers.removeAll(where: condition)
+                self.viewControllers.removeAll(where: { viewController in
+                    return viewControllersToRemove.contains(where: { $0 === viewController})
+                })
+                viewController.navigationItem.leftBarButtonItem = nil
                 completion?()
             }
         )
