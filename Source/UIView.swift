@@ -70,7 +70,7 @@ extension UIView {
     public static func emptyWidth(_ width: CGFloat) -> UIView {
         let view = UIView()
         view.snp.makeConstraints({ make in
-            make.height.equalTo(width)
+            make.width.equalTo(width)
         })
         
         return view
