@@ -49,10 +49,24 @@ public final class OverlayAnimatedTransitioning: NSObject, UIViewControllerAnima
     
 }
 
+private final class OverlayView: UIView {
+    override func didAddSubview(_ subview: UIView) {
+        super.didAddSubview(subview)
+        
+        // The size of the subview is incorrect after a fullscreen modal that was presented overtop is dismissed.
+        subview.snp.remakeConstraints({ make in
+            make.edges.equalToSuperview()
+        })
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
+}
+
 public final class OverlayPresentationController: UIPresentationController {
     
-    private lazy var overlayView: UIView = {
-        let view = UIView()
+    private lazy var overlayView: OverlayView = {
+        let view = OverlayView()
         view.layer.cornerRadius = 10
         view.clipsToBounds = true
         return view
