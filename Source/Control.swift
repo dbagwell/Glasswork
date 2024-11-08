@@ -29,8 +29,8 @@ open class Control: UIControl {
             return super.isHighlighted
         }
         set {
-            guard self.isEnabled else { return }
             super.isHighlighted = newValue
+            guard self.isEnabled else { return }
             UIView.animate(withDuration: self.isHighlighted ? 0 : 0.25, animations: {
                 self.subviews.forEach({ $0.alpha = self.isHighlighted ? 0.2 : 1 })
             })
