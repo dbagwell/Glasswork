@@ -128,7 +128,6 @@ open class SegmentedViewController: UIViewController {
             axis: .vertical,
             alignment: .fill,
             distribution: .fill,
-            insetsLayoutMarginsFromSafeArea: true,
             subviews: [
                 self.segmentStackView,
                 self.separatorView,
