@@ -18,6 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import SnapKit
 import UIKit
 
 open class SegmentedViewController: UIViewController {
@@ -45,6 +46,7 @@ open class SegmentedViewController: UIViewController {
     private let segmentBadgeTextStyle: UILabel.Style
     private let segmentBadgeColor: UIColor
     private let segmentSeparatorColor: UIColor
+    private let activeSegmentSeparatorColor: UIColor
     
     public var segments: [Segment] {
         didSet {
@@ -87,6 +89,8 @@ open class SegmentedViewController: UIViewController {
                 let button = self.segmentButton(for: segment)
                 button.isSelected = true
             }
+            
+            self.updateConstraints(animated: true)
         }
     }
     
@@ -113,8 +117,24 @@ open class SegmentedViewController: UIViewController {
         return view
     }()
     
+    private var activeSeparatorLeftConstraint: Constraint?
+    private var activeSeparatorRightConstraint: Constraint?
+    
+    private lazy var activeSeparatorView: UIView = {
+        let view = UIView()
+        view.backgroundColor = self.activeSegmentSeparatorColor
+        return view
+    }()
+    
     private lazy var separatorView: UIView = {
         let view = UIView.color(self.segmentSeparatorColor, withHeight: 1)
+        
+        view.addSubview(self.activeSeparatorView, { make in
+            make.top.bottom.equalToSuperview()
+            self.activeSeparatorLeftConstraint = make.left.equalToSuperview().inset(0).constraint
+            self.activeSeparatorRightConstraint = make.right.equalToSuperview().inset(0).constraint
+        })
+        
         return view
     }()
     
@@ -147,6 +167,7 @@ open class SegmentedViewController: UIViewController {
         segmentBadgeTextStyle: UILabel.Style,
         segmentBadgeColor: UIColor,
         segmentSeparatorColor: UIColor,
+        activeSegmentSeparatorColor: UIColor? = nil,
         segments: [Segment] = []
     ) {
         self.backgroundColor = backgroundColor
@@ -155,6 +176,7 @@ open class SegmentedViewController: UIViewController {
         self.segmentBadgeTextStyle = segmentBadgeTextStyle
         self.segmentBadgeColor = segmentBadgeColor
         self.segmentSeparatorColor = segmentSeparatorColor
+        self.activeSegmentSeparatorColor = activeSegmentSeparatorColor ?? activeSegmentTitleStyle.color
         self.segments = segments
         super.init(nibName: nil, bundle: nil)
     }
@@ -174,6 +196,12 @@ open class SegmentedViewController: UIViewController {
         })
         
         self.segments = nil ?? self.segments
+    }
+    
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.updateConstraints(animated: false)
     }
     
     // MARK: - Methods
@@ -205,6 +233,21 @@ open class SegmentedViewController: UIViewController {
         }
         
         self.segmentButton(for: segment).viewModel.badgeText = text
+    }
+    
+    private func updateConstraints(animated: Bool) {
+        guard let activeSegmentIndex = self.segments.firstIndex(where: { $0.id == self.activeSegment?.id }) else { return }
+        
+        self.activeSeparatorLeftConstraint?.update(offset: self.segmentButtons[activeSegmentIndex].frame.origin.x)
+        self.activeSeparatorRightConstraint?.update(inset: self.separatorView.frame.width - (self.segmentButtons[activeSegmentIndex].frame.origin.x + self.segmentButtons[activeSegmentIndex].frame.width))
+        
+        if animated {
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, animations: {
+                self.separatorView.layoutIfNeeded()
+            })
+        } else {
+            self.separatorView.layoutIfNeeded()
+        }
     }
     
 }
