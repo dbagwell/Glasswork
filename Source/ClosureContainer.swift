@@ -22,13 +22,14 @@ import UIKit
 
 class ClosureContainer {
     private let closure: () -> ()
+    private var key: UInt8 = 0
     
     init(attachTo: AnyObject, closure: @escaping () -> ()) {
         self.closure = closure
-        objc_setAssociatedObject(attachTo, "[\(arc4random())]", self, .OBJC_ASSOCIATION_RETAIN)
+        objc_setAssociatedObject(attachTo, &self.key, self, .OBJC_ASSOCIATION_RETAIN)
     }
     
     @objc func invokeClosure() {
-        closure()
+        self.closure()
     }
 }
