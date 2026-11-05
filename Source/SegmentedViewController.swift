@@ -138,6 +138,29 @@ open class SegmentedViewController: UIViewController {
         return view
     }()
     
+    private lazy var headerStackView: UIStackView = {
+        let view = UIStackView(
+            axis: .vertical,
+            alignment: .fill,
+            distribution: .fill,
+            subviews: [
+                self.segmentStackView,
+                self.separatorView,
+            ]
+        )
+        
+        return view
+    }()
+    
+    private lazy var headerView: UIView = {
+        let view = UIView()
+        view.addSubview(self.headerStackView, { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        })
+        
+        return view
+    }()
+    
     private lazy var containerView: UIView = {
         let view = UIView()
         return view
@@ -149,8 +172,7 @@ open class SegmentedViewController: UIViewController {
             alignment: .fill,
             distribution: .fill,
             subviews: [
-                self.segmentStackView,
-                self.separatorView,
+                self.headerView,
                 self.containerView,
             ]
         )
