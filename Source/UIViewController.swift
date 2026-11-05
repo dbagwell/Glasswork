@@ -95,10 +95,15 @@ extension UIViewController {
         )
     }
     
-    public func overlay(_ viewController: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) {
+    public func overlay(_ viewController: UIViewController, animated: Bool = true, maxWidth: CGFloat = 500, completion: (() -> Void)? = nil) {
+        let oldMaxWidth = OverlayTransitioningDelegate.shared.maxWidth
+        OverlayTransitioningDelegate.shared.maxWidth = maxWidth
         viewController.transitioningDelegate = OverlayTransitioningDelegate.shared
         viewController.modalPresentationStyle = .custom
-        self.present(viewController, animated: animated, completion: completion)
+        self.present(viewController, animated: animated, completion: {
+            OverlayTransitioningDelegate.shared.maxWidth = OverlayTransitioningDelegate.shared.maxWidth
+            completion?()
+        })
     }
     
 }

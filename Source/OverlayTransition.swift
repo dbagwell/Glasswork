@@ -12,6 +12,7 @@ import UIKit
 public final class OverlayTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
     public static let shared = OverlayTransitioningDelegate()
+    public var maxWidth: CGFloat = 500
     
     public func presentationController(
         forPresented presented: UIViewController,
@@ -78,8 +79,10 @@ public final class OverlayPresentationController: UIPresentationController {
         let view = UIVisualEffectView(effect: nil)
         
         view.contentView.addSubview(self.overlayView, { make in
-            make.top.greaterThanOrEqualTo(view.safeAreaLayoutGuide).inset(10)
-            make.left.right.equalToSuperview().inset(10)
+            make.top.left.greaterThanOrEqualTo(view.safeAreaLayoutGuide).inset(10)
+            make.right.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(10)
+            make.width.lessThanOrEqualTo(OverlayTransitioningDelegate.shared.maxWidth)
+            make.centerX.equalTo(view.safeAreaLayoutGuide)
             
             // Offscreen Constraint (disable this to bring it on screen)
             self.cardOffscreenConstraint = make.top.equalTo(view.snp.bottom).constraint
