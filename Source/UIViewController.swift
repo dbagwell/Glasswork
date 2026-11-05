@@ -53,7 +53,13 @@ extension UIViewController {
         animated: Bool = true,
         completion: (() -> Void)? = nil
     ) -> UINavigationController {
-        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(self.dismissAnimatedWithoutCompletion))
+        var item = UIBarButtonItem.SystemItem.stop
+        
+        if #available(iOS 13, *) {
+            item = UIBarButtonItem.SystemItem.close
+        }
+        
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: item, target: self, action: #selector(self.dismissAnimatedWithoutCompletion))
         let navigationController = UINavigationController(rootViewController: viewController)
         
         if fullScreen {
