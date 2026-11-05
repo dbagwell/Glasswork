@@ -41,9 +41,27 @@ extension Array where Element: UITextField {
 extension UITextField {
     
     public func useReturnKeyToolbarAsInputAccessoryView(tintColor: UIColor? = nil) {
-        self.inputAccessoryView = UIToolbar(returnKeyType: self.returnKeyType, tintColor: tintColor, action: { [weak self] in
-            self?.sendActions(for: .editingDidEndOnExit)
-        })
+        if #available(iOS 26, *) {
+            let view = UninteractableView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            
+            let button = UIButton(type: .system)
+            button.setTitle(self.returnKeyType.title, for: .normal)
+            button.configuration = .glass()
+            button.addAction(action: { [weak self] in
+                self?.sendActions(for: .editingDidEndOnExit)
+            })
+            
+            view.addSubview(button, { make in
+                make.top.right.bottom.equalToSuperview().inset(15)
+            })
+            
+            self.inputAccessoryView = view
+        } else {
+            self.inputAccessoryView = UIToolbar(returnKeyType: self.returnKeyType, tintColor: tintColor, action: { [weak self] in
+                self?.sendActions(for: .editingDidEndOnExit)
+            })
+        }
     }
     
 }
